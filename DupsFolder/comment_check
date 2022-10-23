@@ -1,0 +1,19 @@
+#!/bin/bash
+line=$(head -n 1 $1)
+extension="${1##*.}"
+if [[ "$extension" == "js" ]] || [[ "$extension" == "cpp" ]]; then
+	comm="${line:0:2}"
+	if [[ "$comm" == "//" ]]; then
+		echo "Comment is present"
+	else
+		echo "Comment is absent"
+	fi
+else
+	comm="${line:0:1}"
+        if [[ "$comm" == "#" ]]; then
+                echo "Comment is present"
+        else
+                echo "Comment is absent"
+        fi
+fi
+

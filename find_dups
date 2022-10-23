@@ -1,0 +1,19 @@
+#!/bin/bash
+for file in `find $1 -name '*.*' -or -name '*'`; do
+	if [ -f $file ]; then
+		namesArr+=$file
+		md5_cur=($(md5 -r $file))
+		for file_inner in `find $1 -name '*.*' -or -name '*'`; do
+			if [ "$file" != "$file_inner" ] && [ -f "$file_inner" ]; then
+				md5_inner=($(md5 -r $file_inner))
+				if [ $md5_cur == $md5_inner ]; then	
+					if [ ${#file} > ${#file_inner} ]; then
+						echo "$file -- $file_inner"
+					fi
+				fi
+			fi
+		done
+	fi
+done
+
+
